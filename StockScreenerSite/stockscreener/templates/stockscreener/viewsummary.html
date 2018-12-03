@@ -1,0 +1,79 @@
+﻿{% extends "stockscreener/layout.html" %}
+
+{% block content %}
+<head>
+    <title>Convert JSON Data to HTML Table</title>
+    <style>
+        th, td, p, input {
+            font:12px Verdana;
+        }
+        table {
+            table-layout:fixed;
+        }
+        table, th, td 
+        {
+            border: solid 2px #DDD;
+            border-collapse: collapse;
+            padding: 1px 1px;
+            text-align: center;
+            margin:auto;
+        }
+        th {
+            font-weight:bold;
+            color:white;
+            background:linear-gradient(top, #3c3c3c 0%, #222222 100%);
+            background: -webkit-linear-gradient(top, #3c3c3c 0%, #222222 100%);
+        }
+        tr:hover {
+            background:orange;
+        }
+        td:hover {
+            font-weight:bold;
+        }
+        th:hover {
+            color:red;
+            background:orange;
+        }
+        button {
+                background-color: #555555; /* Green */
+                border: none;
+                color: white;
+                padding: 15px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+            }
+    </style>
+</head>
+<body>
+    <div>
+      <form action= "generatesummaryreport/" method="POST">{% csrf_token %}
+          <input type="submit" value="Generate Report" id="generate_report" />
+      </form>
+    </div>
+</body>
+
+<h3><u><b>Breakfast Report</b></u></h3>
+<table>
+    <tr>
+        {% for col in summary_col %}
+            <th>{{col}}</th>
+        {% endfor %}
+    </tr>
+    {% for obj in summary_data %}
+        <tr>
+            {% for key, value in obj.items %}
+                <td>{{value}}</td>
+            {% endfor %}
+        </tr>
+
+    {% endfor %}
+</table>
+<p>
+    <line></line>
+</p>
+
+{% endblock %}
